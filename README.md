@@ -50,6 +50,20 @@ Agent Engineer Roadmap
 | Diagram 1 | [`assets/01-dynamic-instructions/code-and-flow.png`](assets/01-dynamic-instructions/code-and-flow.png) |
 | Diagram 2 | [`assets/01-dynamic-instructions/full-execution-flow.png`](assets/01-dynamic-instructions/full-execution-flow.png) |
 
+### Visual Notes
+
+![code and flow](assets/01-dynamic-instructions/code-and-flow.png)
+
+![full execution flow](assets/01-dynamic-instructions/full-execution-flow.png)
+
+### Run The Code
+
+```bash
+pip install -r requirements.txt
+export DEEPSEEK_API_KEY="your_key"
+python src/01_single_agent/dual_persona_agent.py
+```
+
 ## Learning Map
 
 ```mermaid
@@ -80,4 +94,3 @@ For each module, I need to be able to answer:
 3. What is the execution flow?
 4. Can I modify the example into my own scenario?
 5. Can I explain it without looking at the code?
-
