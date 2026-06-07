@@ -46,7 +46,9 @@ Agent Engineer Roadmap
 | Item | Path |
 | --- | --- |
 | Note | [`notes/01_dynamic_instructions.md`](notes/01_dynamic_instructions.md) |
+| Practice | [`notes/01_dynamic_instructions_practice.md`](notes/01_dynamic_instructions_practice.md) |
 | Code | [`src/01_single_agent/dual_persona_agent.py`](src/01_single_agent/dual_persona_agent.py) |
+| Practice code | [`src/01_single_agent/dual_persona_agent_practice.py`](src/01_single_agent/dual_persona_agent_practice.py) |
 | Diagram 1 | [`assets/01-dynamic-instructions/code-and-flow.png`](assets/01-dynamic-instructions/code-and-flow.png) |
 | Diagram 2 | [`assets/01-dynamic-instructions/full-execution-flow.png`](assets/01-dynamic-instructions/full-execution-flow.png) |
 
@@ -68,6 +70,12 @@ Preview the dynamic instructions without an API key:
 
 ```bash
 python src/01_single_agent/dual_persona_agent.py --dry-run
+```
+
+Practice only the context-to-instructions chain:
+
+```bash
+python src/01_single_agent/dual_persona_agent_practice.py --dry-run
 ```
 
 ## Learning Map
