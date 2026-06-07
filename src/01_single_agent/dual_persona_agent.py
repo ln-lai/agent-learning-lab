@@ -10,6 +10,7 @@ Run:
 """
 
 import asyncio
+import argparse
 import os
 from dataclasses import dataclass
 from typing import Literal
@@ -45,13 +46,8 @@ def choose_persona(user_message: str) -> Literal["technical", "coach"]:
     return "technical"
 
 
-def dynamic_instructions(
-    run_context: RunContextWrapper[StudyContext],
-    agent: Agent[StudyContext],
-) -> str:
-    context = run_context.context
-
-    if context.persona == "technical":
+def build_instructions(persona: Literal["technical", "coach"]) -> str:
+    if persona == "technical":
         return (
             "你是一个 Agent 开发技术导师。"
             "回答要结构化，先用一句话解释核心概念，"
@@ -64,6 +60,14 @@ def dynamic_instructions(
         "先共情，再把问题拆成一个很小的下一步行动。"
         "语气温和、直接，不要空泛鼓励。"
     )
+
+
+def dynamic_instructions(
+    run_context: RunContextWrapper[StudyContext],
+    agent: Agent[StudyContext],
+) -> str:
+    context = run_context.context
+    return build_instructions(context.persona)
 
 
 def configure_deepseek() -> None:
@@ -81,7 +85,11 @@ def configure_deepseek() -> None:
     set_tracing_disabled(disabled=True)
 
 
-async def run_case(agent: Agent[StudyContext], user_message: str) -> None:
+async def run_case(
+    agent: Agent[StudyContext],
+    user_message: str,
+    dry_run: bool = False,
+) -> None:
     persona = choose_persona(user_message)
     context = StudyContext(persona=persona)
 
@@ -90,12 +98,26 @@ async def run_case(agent: Agent[StudyContext], user_message: str) -> None:
     print(f"Chosen persona: {persona}")
     print("-" * 72)
 
+    if dry_run:
+        print("Generated instructions:")
+        print(build_instructions(persona))
+        return
+
     result = await Runner.run(agent, user_message, context=context)
     print(result.final_output)
 
 
 async def main() -> None:
-    configure_deepseek()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview persona selection and generated instructions without calling the model.",
+    )
+    args = parser.parse_args()
+
+    if not args.dry_run:
+        configure_deepseek()
 
     agent = Agent[StudyContext](
         name="Study Agent",
@@ -110,9 +132,8 @@ async def main() -> None:
     ]
 
     for message in test_messages:
-        await run_case(agent, message)
+        await run_case(agent, message, dry_run=args.dry_run)
 
 
 if __name__ == "__main__":
     asyncio.run(main())
-

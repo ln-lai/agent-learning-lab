@@ -64,6 +64,12 @@ export DEEPSEEK_API_KEY="your_key"
 python src/01_single_agent/dual_persona_agent.py
 ```
 
+Preview the dynamic instructions without an API key:
+
+```bash
+python src/01_single_agent/dual_persona_agent.py --dry-run
+```
+
 ## Learning Map
 
 ```mermaid
