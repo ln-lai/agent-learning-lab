@@ -14,12 +14,12 @@
 
 ```text
 Agent Engineer Roadmap
-[##--------] 20%
+[###-------] 30%
 ```
 
 | Phase | Topic | Status |
 | --- | --- | --- |
-| 01 | Single Agent basics | In progress |
+| 01 | Single Agent basics | Streaming completed |
 | 02 | Tools and multi-turn tool use | Started |
 | 03 | Agent patterns: routing, judge, guardrails | Started |
 | 04 | Multi-agent collaboration and memory | Not started |
@@ -29,26 +29,29 @@ Agent Engineer Roadmap
 
 今天学习的是：
 
-**Single Agent: Dynamic Instructions / 双人格 Agent**
+**Single Agent: Streaming events, items, and tool calls**
 
 它也可以叫：
 
-- dynamic system prompt
-- context-driven instructions
-- single agent with multiple personas
+- streaming output
+- streamed run events
+- event / item inspection
+- tool call event tracing
 
 核心理解：
 
-> 同一个 Agent 不一定只有一种固定人格。它可以在每次运行前，根据 context 动态生成 instructions，从而用不同策略回答同一个用户问题。
+> `run_streamed` 不只是“字一个个出来”，更重要的是能观察 Agent 运行过程：当前 Agent、工具调用、工具输出、最终消息。
 
 ## Current Module
 
 | Item | Path |
 | --- | --- |
-| Note | [`notes/01_dynamic_instructions.md`](notes/01_dynamic_instructions.md) |
-| Practice | [`notes/01_dynamic_instructions_practice.md`](notes/01_dynamic_instructions_practice.md) |
-| Code | [`src/01_single_agent/dual_persona_agent.py`](src/01_single_agent/dual_persona_agent.py) |
+| Dynamic instructions note | [`notes/01_dynamic_instructions.md`](notes/01_dynamic_instructions.md) |
+| Dynamic instructions practice | [`notes/01_dynamic_instructions_practice.md`](notes/01_dynamic_instructions_practice.md) |
+| Streaming note | [`notes/02_streaming_events_items.md`](notes/02_streaming_events_items.md) |
+| Dynamic instructions code | [`src/01_single_agent/dual_persona_agent.py`](src/01_single_agent/dual_persona_agent.py) |
 | Practice code | [`src/01_single_agent/dual_persona_agent_practice.py`](src/01_single_agent/dual_persona_agent_practice.py) |
+| Streaming code | [`src/01_single_agent/streaming_events_items.py`](src/01_single_agent/streaming_events_items.py) |
 | Diagram 1 | [`assets/01-dynamic-instructions/code-and-flow.png`](assets/01-dynamic-instructions/code-and-flow.png) |
 | Diagram 2 | [`assets/01-dynamic-instructions/full-execution-flow.png`](assets/01-dynamic-instructions/full-execution-flow.png) |
 
@@ -76,6 +79,18 @@ Practice only the context-to-instructions chain:
 
 ```bash
 python src/01_single_agent/dual_persona_agent_practice.py --dry-run
+```
+
+Watch high-level streaming run items:
+
+```bash
+python src/01_single_agent/streaming_events_items.py --mode items
+```
+
+Watch raw text deltas:
+
+```bash
+python src/01_single_agent/streaming_events_items.py --mode text
 ```
 
 ## Learning Map
